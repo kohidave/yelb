@@ -12,7 +12,7 @@ def pageviews()
                 }
                 pageviewsrecord = dynamodb.get_item(params)
                 pageviewscount = pageviewsrecord.item['pageviewscount']
-                pageviewscount += 1 
+                pageviewscount += 1
                 params = {
                         table_name: $yelbddbcache,
                         key: {
@@ -23,8 +23,9 @@ def pageviews()
                         return_values: 'UPDATED_NEW'
                 }
                 pageviewrecord = dynamodb.update_item(params)
-        else 
+        else
                 redis = Redis.new
+                puts "Trying to connect to redis on #{$redishost} and port 6379"
                 redis = Redis.new(:host => $redishost, :port => 6379)
                 redis.incr("pageviews")
                 pageviewscount = redis.get("pageviews")

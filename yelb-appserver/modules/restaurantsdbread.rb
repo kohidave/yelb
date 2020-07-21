@@ -13,7 +13,8 @@ def restaurantsdbread(restaurant)
         }
         restaurantrecord = dynamodb.get_item(params)
         restaurantcount = restaurantrecord.item['restaurantcount']
-    else 
+    else
+        puts "Trying to connect to postgres on #{$yelbdbhost} and port #{$yelbdbport}"
         con = PG.connect  :host => $yelbdbhost,
                         :port => $yelbdbport,
                         :dbname => 'yelbdatabase',
@@ -25,4 +26,4 @@ def restaurantsdbread(restaurant)
         con.close
     end
     return restaurantcount.to_s
-end 
+end
